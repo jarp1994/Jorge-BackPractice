@@ -1,34 +1,14 @@
-const { sequelize } = require('../db');
+const sequelize = require('../db.js');
+const { DataTypes } = require('sequelize');
+const Post = require('./post.js');
 
-const { DataTypes, Model } = require('sequelize');
+const User = sequelize.define('User', {
+    // Create your table here
+})
 
-class User extends Model { }
+// Relationships 
+// One user can have many posts
+User.hasMany(Post);
+Post.belongsTo(User);
 
-User.init(
-    {
-        name: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        email: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        password: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        isAdmin: {
-            type: DataTypes.BOOLEAN,
-            allowNull: false,
-            defaultValue: false
-        }
-    },
-    {
-        sequelize,
-        tableName: 'users',
-        modelName: 'User'
-    }
-)
-
-module.exports = User
+module.exports = User;
