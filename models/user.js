@@ -1,6 +1,6 @@
 const sequelize = require('../db.js');
 const { DataTypes } = require('sequelize');
-const Post = require('./post.js');
+const Post = require('./post');
 
 const User = sequelize.define('User', {
     // Create your table here
@@ -23,7 +23,7 @@ const User = sequelize.define('User', {
 
 // Relationships 
 // One user can have many posts
-User.hasMany(Post, { through: 'user_posts' }); //-->revisar
-Post.belongsToMany(User, { through: 'user_posts' });
+User.hasMany(Post); 
+Post.belongsTo(User);
 
 module.exports = User;
