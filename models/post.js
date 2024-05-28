@@ -7,7 +7,7 @@ const Post = sequelize.define('Post', {
         type: DataTypes.INTEGER,
         primaryKey: true,
         allowNull: false,
-        // autoIncrement: true
+        autoIncrement: true
         },
     title: {
         type: DataTypes.STRING,

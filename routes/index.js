@@ -26,15 +26,49 @@ router.post('/posts', (req, res) => {
 })
 
 
-router.get("/posts",  (req, res) => {
+router.get("/posts", async (req, res) => {
   try {
-    const posts = Post.findAll();
+    const posts = await Post.findAll();
     res.send(posts);
   } catch (error) {;
     res.status(500).send("No se encontraron posts");
   }
 });
 
+router.get("/posts/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const post = await Post.findOne({ where: { id } });
+    res.send(post);
+  } catch (error) {
+    res.status(500).send("No se encontro el post");
+  }
+});
+
+router.put("/posts/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, content } = req.body;
+    const post = await Post.findOne({ where: { id } });
+    post.title = title;
+    post.content = content;
+    await post.save();
+    res.send(post);
+  } catch (error) {
+    res.status(500).send("No se encontro el post");
+  }
+});
+
+router.delete("/posts/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const post = await Post.findOne({ where: { id } });
+    await post.destroy();
+    res.send(post, "se elimino el post");
+  } catch (error) {
+    res.status(500).send("No se encontro el post");
+  }
+});
 
 
 
